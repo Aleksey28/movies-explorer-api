@@ -4,14 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Aleksey28/movies-explorer-api.git"
   },
   "keywords": [],
-  "author": "",
+  "author": {
+    "email": "alekseypopow1995@yandex.ru",
+    "name": "Aleksey",
+    "url": ""
+  },
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Aleksey28/movies-explorer-api/issues"
