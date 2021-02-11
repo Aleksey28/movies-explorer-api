@@ -40,7 +40,7 @@ const login = (req, res, next) => {
 };
 
 const getUser = (req, res, next) => {
-  User.findById(req.param.id)
+  User.findById(req.user._id)
     .orFail(() => { throw new NotFoundErr('Нет пользователя с таким id'); })
     .then((data) => { res.send(data); })
     .catch(next);
@@ -48,7 +48,7 @@ const getUser = (req, res, next) => {
 const updateUserInfo = (req, res, next) => {
   const { name, email } = req.body;
   User.findByIdAndUpdate(
-    req.user.id,
+    req.user._id,
     {
       name,
       email,
