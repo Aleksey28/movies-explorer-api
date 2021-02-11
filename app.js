@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const helmet = require('helmet');
 // const cors = require('cors');
 const cookieParser = require('cookie-parser');
 // const { corsOptions } = require('./config');
@@ -13,8 +14,6 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { PORT = 3000, MONGO_URL = 'mongodb://localhost:27017/bitfilmsdb' } = process.env;
 const app = express();
 
-// app.use(cors(corsOptions));
-
 mongoose.connect(MONGO_URL, {
   useNewUrlParser: true,
   useCreateIndex: true,
@@ -22,6 +21,8 @@ mongoose.connect(MONGO_URL, {
   useUnifiedTopology: true,
 });
 
+app.use(helmet());
+// app.use(cors(corsOptions));
 app.use(requestLogger);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
