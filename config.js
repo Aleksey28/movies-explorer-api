@@ -1,3 +1,5 @@
+const rateLimit = require('express-rate-limit');
+
 const whiteList = [
   'http://localhost:3000',
   'https://localhost:3000',
@@ -17,6 +19,12 @@ const corsOptions = {
   optionsSuccessStatus: 200,
 };
 
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // за 15 минут
+  max: 100, // можно совершить максимум 100 запросов с одного IP
+});
+
 module.exports = {
   corsOptions,
+  limiter,
 };

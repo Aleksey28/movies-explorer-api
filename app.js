@@ -5,8 +5,8 @@ const bodyParser = require('body-parser');
 const helmet = require('helmet');
 // const cors = require('cors');
 const cookieParser = require('cookie-parser');
-// const { corsOptions } = require('./config');
 const { errors } = require('celebrate');
+const { corsOptions, limiter } = require('./config');
 const routes = require('./routes/routes');
 const errorHandler = require('./middlewares/error-handler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -21,6 +21,7 @@ mongoose.connect(MONGO_URL, {
   useUnifiedTopology: true,
 });
 
+app.use(limiter);
 app.use(helmet());
 // app.use(cors(corsOptions));
 app.use(requestLogger);
