@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 
 const mongoose = require('mongoose');
 const users = require('./routes/users');
-const { createUser } = require('./controllers/users');
+const { createUser, login } = require('./controllers/users');
 const NotFoundErr = require('./errors/not-found-err');
 
 const { PORT = 3000 } = process.env;
@@ -44,6 +44,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.post('/signup', createUser);
+app.post('/signin', login);
 
 app.use('/users', users);
 
