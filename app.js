@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 
 const mongoose = require('mongoose');
 const users = require('./routes/users');
+const movies = require('./routes/movies');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { createUser, login, logout } = require('./controllers/users');
 const auth = require('./middlewares/auth');
@@ -52,6 +53,7 @@ app.post('/signin', login);
 app.post('/signout', logout);
 
 app.use('/users', auth, users);
+app.use('/movies', auth, movies);
 
 app.all('/*', () => {
   throw new NotFoundErr('Запрашиваемый ресурс не найден');
