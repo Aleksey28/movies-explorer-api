@@ -38,7 +38,7 @@ const login = (req, res, next) => {
     })
     .catch(next);
 };
-const logout = (req, res, next) => {
+const logout = (req, res) => {
   res.clearCookie('jwt').send({ success: true });
 };
 const getUser = (req, res, next) => {
@@ -49,19 +49,25 @@ const getUser = (req, res, next) => {
 };
 const updateUserInfo = (req, res, next) => {
   const { name, email } = req.body;
-  User.findByIdAndUpdate(
-    req.user._id,
-    {
-      name,
-      email,
-    },
-    {
-      new: true,
-      runValidators: true,
-    },
-  )
-    .orFail(() => { throw new NotFoundErr('Нет пользователя с таким id'); })
-    .then((data) => { res.send(data); })
+  User.findOne({ email })
+    .then((foundData) => {
+      if (foundData && foundData._id.toString() !== req.user._id.toString()) {
+        throw new ConflictingRequest('Пользователь с таким E-mail уже существует.');
+      }
+      return User.findByIdAndUpdate(
+        req.user._id,
+        {
+          name,
+          email,
+        },
+        {
+          new: true,
+          runValidators: true,
+        },
+      )
+        .orFail(() => { throw new NotFoundErr('Нет пользователя с таким id'); })
+        .then((data) => { res.send(data); });
+    })
     .catch(next);
 };
 
