@@ -6,13 +6,13 @@ const Unauthorized = require('../errors/unauthorized');
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
-    minLength: 2,
-    maxLength: 30,
+    require: [true, 'Поле "name" обязательно для заполнения.'],
+    minLength: [2, 'Минимальная длинная поля "name" - 2'],
+    maxLength: [30, 'Максимальная длинная поля "name" - 30'],
   },
   email: {
     type: String,
-    required: true,
+    require: [true, 'Поле "email" обязательно для заполнения.'],
     unique: true,
     validate: {
       validator: (v) => isEmail(v),
@@ -21,9 +21,8 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
+    require: [true, 'Поле "password" обязательно для заполнения.'],
     select: false,
-    minLength: 8,
   },
 });
 
