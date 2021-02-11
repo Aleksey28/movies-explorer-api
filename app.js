@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 
 const mongoose = require('mongoose');
 const users = require('./routes/users');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { createUser, login } = require('./controllers/users');
 const NotFoundErr = require('./errors/not-found-err');
 
@@ -43,6 +44,8 @@ mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
 app.use(bodyParser.json());
 app.use(cookieParser());
 
+app.use(requestLogger);
+
 app.post('/signup', createUser);
 app.post('/signin', login);
 
@@ -51,6 +54,8 @@ app.use('/users', users);
 app.all('/*', () => {
   throw new NotFoundErr('Запрашиваемый ресурс не найден');
 });
+
+app.use(errorLogger);
 
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;
