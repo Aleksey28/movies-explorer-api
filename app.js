@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const users = require('./routes/users');
 const { createUser } = require('./controllers/users');
@@ -38,6 +39,7 @@ mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
 });
 
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 app.post('/signup', createUser);
 app.use('/users', users);
