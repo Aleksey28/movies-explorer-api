@@ -9,6 +9,7 @@ const users = require('./routes/users');
 const movies = require('./routes/movies');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { createUser, login, logout } = require('./controllers/users');
+const checkPassword = require('./middlewares/check-password');
 const auth = require('./middlewares/auth');
 const NotFoundErr = require('./errors/not-found-err');
 
@@ -48,8 +49,8 @@ app.use(cookieParser());
 
 app.use(requestLogger);
 
-app.post('/signup', createUser);
-app.post('/signin', login);
+app.post('/signup', checkPassword, createUser);
+app.post('/signin', checkPassword, login);
 app.post('/signout', logout);
 
 app.use('/users', auth, users);
