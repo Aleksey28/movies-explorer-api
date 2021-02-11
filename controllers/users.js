@@ -38,7 +38,9 @@ const login = (req, res, next) => {
     })
     .catch(next);
 };
-
+const logout = (req, res, next) => {
+  res.clearCookie('jwt').send({ success: true });
+};
 const getUser = (req, res, next) => {
   User.findById(req.user._id)
     .orFail(() => { throw new NotFoundErr('Нет пользователя с таким id'); })
@@ -66,6 +68,7 @@ const updateUserInfo = (req, res, next) => {
 module.exports = {
   createUser,
   login,
+  logout,
   getUser,
   updateUserInfo,
 };

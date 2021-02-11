@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const users = require('./routes/users');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const { createUser, login } = require('./controllers/users');
+const { createUser, login, logout } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const NotFoundErr = require('./errors/not-found-err');
 
@@ -49,6 +49,7 @@ app.use(requestLogger);
 
 app.post('/signup', createUser);
 app.post('/signin', login);
+app.post('/signout', logout);
 
 app.use('/users', auth, users);
 
