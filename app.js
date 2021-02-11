@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 const users = require('./routes/users');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { createUser, login } = require('./controllers/users');
+const auth = require('./middlewares/auth');
 const NotFoundErr = require('./errors/not-found-err');
 
 const { PORT = 3000 } = process.env;
@@ -49,7 +50,7 @@ app.use(requestLogger);
 app.post('/signup', createUser);
 app.post('/signin', login);
 
-app.use('/users', users);
+app.use('/users', auth, users);
 
 app.all('/*', () => {
   throw new NotFoundErr('Запрашиваемый ресурс не найден');
