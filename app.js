@@ -3,9 +3,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+
 const mongoose = require('mongoose');
 const users = require('./routes/users');
 const { createUser } = require('./controllers/users');
+const NotFoundErr = require('./errors/not-found-err');
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -17,7 +19,7 @@ const whiteList = [
   'https://localhost:3001',
 ];
 
-const corsOption = {
+const corsOptions = {
   origin(origin, callback) {
     if (whiteList.indexOf(origin) !== -1) {
       callback(null, true);
@@ -29,7 +31,7 @@ const corsOption = {
   optionsSuccessStatus: 200,
 };
 
-app.use(cors(corsOption));
+app.use(cors(corsOptions));
 
 mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
   useNewUrlParser: true,
@@ -42,7 +44,23 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.post('/signup', createUser);
+
 app.use('/users', users);
+
+app.all('/*', () => {
+  throw new NotFoundErr('Запрашиваемый ресурс не найден');
+});
+
+app.use((err, req, res, next) => {
+  const { statusCode = 500, message } = err;
+  res
+    .status(statusCode)
+    .send({
+      message: statusCode === 500 ? 'На сервере произошла ошибка =('
+        : message,
+    });
+  next();
+});
 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
