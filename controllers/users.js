@@ -54,19 +54,20 @@ const updateUserInfo = (req, res, next) => {
       if (foundData && foundData._id.toString() !== req.user._id.toString()) {
         throw new ConflictingRequest('Пользователь с таким E-mail уже существует.');
       }
-      return User.findByIdAndUpdate(
-        req.user._id,
-        {
-          name,
-          email,
-        },
-        {
-          new: true,
-          runValidators: true,
-        },
-      )
-        .orFail(() => { throw new NotFoundErr('Нет пользователя с таким id'); })
-        .then((data) => { res.send(data); });
+      return User.findById(req.user._id)
+        .then((oldData) => User.findByIdAndUpdate(
+          req.user._id,
+          {
+            name: name || oldData.name,
+            email: email || oldData.email,
+          },
+          {
+            new: true,
+            runValidators: true,
+          },
+        )
+          .orFail(() => { throw new NotFoundErr('Нет пользователя с таким id'); })
+          .then((data) => { res.send(data); }));
     })
     .catch(next);
 };

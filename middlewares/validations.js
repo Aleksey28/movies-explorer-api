@@ -35,15 +35,13 @@ const validateUserCreate = celebrate({
 
 const validateUserUpdate = celebrate({
   body: Joi.object().keys({
-    name: Joi.string().required().min(2).max(30)
+    name: Joi.string().min(2).max(30)
       .messages({
-        'any.required': 'Поле "name" обязательно для заполнения.',
         'string.min': 'Минимальная длинная поля "name" - 2',
         'string.max': 'Максимальная длинная поля "name" - 30',
       }),
-    email: Joi.string().required().email()
+    email: Joi.string().email()
       .messages({
-        'any.required': 'Поле "email" обязательно для заполнения.',
         'string.email': 'Не верно указан адрес "email".',
       }),
   }).unknown(true),
