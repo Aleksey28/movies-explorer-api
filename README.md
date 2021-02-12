@@ -88,7 +88,7 @@
     trailer     | String
     thumbnail   | String
     owner       | Object
-    movieId     | String
+    movieId     | Number
     nameRU      | String
     nameEN      | String
 
@@ -105,7 +105,7 @@
     image       | String | true
     trailer     | String | true
     thumbnail   | String | true
-    movieId     | String | true
+    movieId     | Number | true
     nameRU      | String | true
     nameEN      | String | true
 
@@ -122,7 +122,7 @@
     trailer     | String
     thumbnail   | String
     owner       | Object
-    movieId     | String
+    movieId     | Number
     nameRU      | String
     nameEN      | String
 
@@ -141,7 +141,7 @@
     trailer     | String
     thumbnail   | String
     owner       | Object
-    movieId     | String
+    movieId     | Number
     nameRU      | String
     nameEN      | String
 

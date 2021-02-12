@@ -86,7 +86,7 @@ const validateMovieBody = celebrate({
         'any.required': 'Поле "thumbnail" обязательно для заполнения.',
         'string.uri': 'Не верно указана ссылка "thumbnail".',
       }),
-    movieId: Joi.string().required()
+    movieId: Joi.number().required()
       .messages({
         'any.required': 'Поле "movieId" обязательно для заполнения.',
       }),
