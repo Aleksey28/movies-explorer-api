@@ -1,6 +1,19 @@
 # "Movies explorer" (бэкенд)
 
+## Запуск проекта
+
+`npm run start` — запускает сервер
+`npm run dev` — запускает сервер с hot-reload
+
+
+## Используемы технологии
+
+Данный проект был реализован на Node.js, Express.js, JS и MongoDB согласно технологии Rest API.
+
+
 ## Описание API
+
+Доступ к API осуществляется через URL: https://api.movies-explorer.students.nomoredomains.monster/
 
 ### Auth
 + POST /signin - авторизовать пользователя
@@ -144,16 +157,6 @@
     movieId     | Number
     nameRU      | String
     nameEN      | String
-
-## Запуск проекта
-
-`npm run start` — запускает сервер
-`npm run dev` — запускает сервер с hot-reload
-
-
-## Используемы технологии
-
-Данный проект был реализован на Node.js, Express.js, JS и MongoDB согласно технологии Rest API.
 
 ## Планы на будущее
 
