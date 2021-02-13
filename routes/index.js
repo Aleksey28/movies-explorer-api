@@ -8,6 +8,7 @@ const auth = require('../middlewares/auth');
 const NotFoundErr = require('../errors/not-found-err');
 const { validateAuthentication, validateUserCreate } = require('../middlewares/validations');
 
+router.all('/', auth);
 router.post('/signup', validateUserCreate, checkPassword, createUser);
 router.post('/signin', validateAuthentication, checkPassword, login);
 router.get('/signout', logout);
