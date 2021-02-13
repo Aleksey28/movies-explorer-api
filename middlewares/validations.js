@@ -1,5 +1,6 @@
 const { celebrate, Joi } = require('celebrate');
 const { ObjectId } = require('mongoose').Types;
+const isURL = require('validator/lib/isURL');
 
 const validateMovieId = celebrate({
   params: Joi.object().keys({
@@ -69,20 +70,32 @@ const validateMovieBody = celebrate({
       .messages({
         'any.required': 'Поле "description" обязательно для заполнения.',
       }),
-    image: Joi.string().required().uri()
+    image: Joi.string().required().custom((value, helpers) => {
+      if (isURL(value)) {
+        return value;
+      }
+      return helpers.message('Поле "image" должно быть заполнено url-адресом.');
+    })
       .messages({
         'any.required': 'Поле "image" обязательно для заполнения.',
-        'string.uri': 'Не верно указана ссылка "image".',
       }),
-    trailer: Joi.string().required().uri()
+    trailer: Joi.string().required().custom((value, helpers) => {
+      if (isURL(value)) {
+        return value;
+      }
+      return helpers.message('Поле "trailer" должно быть заполнено url-адресом.');
+    })
       .messages({
         'any.required': 'Поле "trailer" обязательно для заполнения.',
-        'string.uri': 'Не верно указана ссылка "trailer".',
       }),
-    thumbnail: Joi.string().required().uri()
+    thumbnail: Joi.string().required().custom((value, helpers) => {
+      if (isURL(value)) {
+        return value;
+      }
+      return helpers.message('Поле "thumbnail" должно быть заполнено url-адресом.');
+    })
       .messages({
         'any.required': 'Поле "thumbnail" обязательно для заполнения.',
-        'string.uri': 'Не верно указана ссылка "thumbnail".',
       }),
     movieId: Joi.number().required()
       .messages({
