@@ -10,7 +10,7 @@ const routes = require('./routes');
 const errorHeandler = require('./middlewares/error-heandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-const { PORT, NODE_ENV, MONGO_URL } = process.env;
+const { PORT = 3000, NODE_ENV, MONGO_URL } = process.env;
 const app = express();
 
 mongoose.connect(NODE_ENV === 'production' ? MONGO_URL : 'mongodb://localhost:27017/bitfilmsdb', {
