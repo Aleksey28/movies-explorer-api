@@ -5,12 +5,13 @@ const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
-const { limiter } = require('./config');
+const cors = require('cors');
+const { limiter, corsOptions } = require('./config');
 const routes = require('./routes');
 const errorHeandler = require('./middlewares/error-heandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-const { PORT, NODE_ENV, MONGO_URL } = process.env;
+const { PORT = 3000, NODE_ENV, MONGO_URL } = process.env;
 const app = express();
 
 mongoose.connect(NODE_ENV === 'production' ? MONGO_URL : 'mongodb://localhost:27017/bitfilmsdb', {
@@ -21,6 +22,7 @@ mongoose.connect(NODE_ENV === 'production' ? MONGO_URL : 'mongodb://localhost:27
 });
 
 app.use(requestLogger);
+app.use(cors(corsOptions));
 app.use(limiter);
 app.use(helmet());
 app.use(bodyParser.json());
