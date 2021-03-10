@@ -18,7 +18,18 @@ const createUser = (req, res, next) => {
       name,
       password: hash,
     }))
-    .then((data) => { res.send({ email: data.email, name: data.name }); })
+    .then((data) => {
+      const { NODE_ENV, JWT_SECRET } = process.env;
+      const token = jwt.sign(
+        { _id: data._id },
+        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+        { expiresIn: '7d' },
+      );
+      res.cookie('jwt', `Bearer ${token}`, {
+        maxAge: 3600000 * 24 * 7,
+        httpOnly: true,
+      }).send({ email: data.email, name: data.name });
+    })
     .catch(next);
 };
 const login = (req, res, next) => {
