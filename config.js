@@ -10,8 +10,8 @@ const whitelist = [
   'https://localhost:3000',
   'http://localhost:3001',
   'https://localhost:3001',
-  'https://mesto.aleksey.students.nomoredomains.monster',
-  'http://mesto.aleksey.students.nomoredomains.monster',
+  'https://movies-explorer.students.nomoredomains.monster',
+  'http://movies-explorer.students.nomoredomains.monster',
 ];
 const corsOptions = {
   origin(origin, callback) {
