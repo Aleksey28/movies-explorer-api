@@ -13,7 +13,7 @@
 
 ## Описание API
 
-Доступ к API осуществляется через URL: https://api.movies-explorer.students.nomoredomains.monster/
+Доступ к API осуществляется через URL: https://movies-explorer.api.students.nomoredomains.monster
 
 ### Auth
 + POST /signin - авторизовать пользователя
